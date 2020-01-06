@@ -1,7 +1,7 @@
 class TopicsController < ApplicationController
   def index
     topics = Topic.for_user(@current_user)
-    render json: topics
+    render json: { status: "success", body: topics, message: "#{topics.length} topics found" }
   end
 
   def show
