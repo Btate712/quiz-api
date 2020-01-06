@@ -23,4 +23,24 @@ class QuestionsController < ApplicationController
       render json: { status: "fail", message: "question/topic not found" }
     end
   end
+
+  def create
+    question = Question.new(question_params)
+    topic = Topic.find(question.topic_id)
+    if @current_user.has_topic_edit_rights(topic)
+      if question.save
+        render json: { status: "success", body: question, message: "question ##{question.id} saved" }
+      else
+        render json: { status: "fail", message: "failed to create question" }
+      end
+    else
+      render json: { status: "fail", message: "user does not have write access to this topic" }
+    end
+  end
+
+  private
+
+  def question_params
+    params.permit(:topic_id, :stem, :choice_1, :choice_2, :choice_3, :choice_4, :correct_choice, :image_url)
+  end
 end
