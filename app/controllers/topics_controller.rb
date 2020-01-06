@@ -19,6 +19,20 @@ class TopicsController < ApplicationController
     end
   end
 
+  def update
+    topic = Topic.find(params[:id])
+    if topic && @current_user.has_topic_edit_rights(topic)
+      topic.update(topic_params)
+      if topic.save
+        render json: { status: "success", body: topic, message: "topic updated" }
+      else
+        render json: { status: "fail", message: "updated topic failed to save" }
+      end 
+    else
+      render json: {status: "fail", message: "topic not found" }
+    end
+  end
+
   def destroy
     topic = Topic.find(params[:id])
     if topic && @current_user.has_topic_edit_rights(topic)
