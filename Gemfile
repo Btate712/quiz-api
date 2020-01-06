@@ -20,6 +20,8 @@ gem 'bcrypt', '~> 3.1.7'
 # Use JavaScript Web Token gem
 gem 'jwt'
 
+gem 'simple_command'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
