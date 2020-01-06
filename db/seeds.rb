@@ -21,6 +21,6 @@ questions = [
     correct_choice: "3", topic: Topic.find_by(name: "Spanish")),
   Question.new(stem: "What does 'estrella' mean in English?",
     choice_1: "street", choice_2: "extra", choice_3: "strange",
-    choice_4: "star", correct_choice: "4", topic: Topic.find_by(name: "Math"))]
+    choice_4: "star", correct_choice: "4", topic: Topic.find_by(name: "Spanish"))]
 
 questions.each { |question| question.save }
