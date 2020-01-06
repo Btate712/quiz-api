@@ -20,4 +20,16 @@ class User < ApplicationRecord
       end
     end
   end
+
+  def has_topic_read_rights(topic)
+    has_rights = false
+    if self.is_admin
+      has_rights = true
+    else
+      if self.topics.include? topic
+        user_topic = self.user_topics.find{ |u_topic| u_topic.topic_id == topic.id }
+        has_rights = true if user_topic
+      end
+    end
+  end 
 end

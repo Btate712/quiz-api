@@ -4,6 +4,23 @@ class TopicsController < ApplicationController
     render json: topics
   end
 
+  def show
+    topic = Topic.find(params[:id])
+    if topic
+      if @current_user.has_topic_read_rights(topic)
+        render json: {
+          status: "success",
+          body: { topic_info: topic, questions: topic.questions },
+          message: "Topic and #{topic.questions.length} questions received"
+        }
+      else
+        render json: { status: "fail", message: "user does not have read access to this topic"}
+      end
+    else
+      render json: { status: "fail", message: "topic not found" }
+    end
+  end
+
   def create
     topic = Topic.new(topic_params)
     if topic.save
@@ -27,7 +44,7 @@ class TopicsController < ApplicationController
         render json: { status: "success", body: topic, message: "topic updated" }
       else
         render json: { status: "fail", message: "updated topic failed to save" }
-      end 
+      end
     else
       render json: {status: "fail", message: "topic not found" }
     end
