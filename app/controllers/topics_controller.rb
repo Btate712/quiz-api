@@ -22,11 +22,7 @@ class TopicsController < ApplicationController
   def destroy
     topic = Topic.find(params[:id])
     if topic && @current_user.has_topic_edit_rights(topic)
-      topic.questions.each do |question|
-        question.encounters.each { |encounter| encounter.destroy }
-        question.comments.each { |comment| comment.destroy }
-        question.destroy
-      end
+      topic.destroy_dependents
       topic.destroy
       render json: { status: "success", message: "topic deleted" }
     else

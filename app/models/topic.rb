@@ -13,4 +13,12 @@ class Topic < ApplicationRecord
       end
     end
   end
+
+  def destroy_dependents
+    self.questions.each do |question|
+      question.encounters.each { |encounter| encounter.destroy }
+      question.comments.each { |comment| comment.destroy }
+      question.destroy
+    end
+  end
 end
