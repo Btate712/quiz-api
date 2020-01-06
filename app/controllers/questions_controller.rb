@@ -39,7 +39,6 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    puts params
     question = Question.find(params[:id])
     topic = Topic.find(question.topic_id)
     new_topic = Topic.find(params[:topic_id])
@@ -53,6 +52,19 @@ class QuestionsController < ApplicationController
     else
       render json: { status: "fail", message: "user does not have write access to this question/topic" }
     end
+  end
+
+  def destroy
+    question = Question.find(params[:id])
+    if question
+      topic = Topic.find(question.topic_id)
+      if topic && @current_user.has_topic_edit_rights(topic)
+        question.destroy
+        render json: { status: "success", message: "question deleted" }
+      else
+        render json: { status: "fail", message: "cannot delete question" }
+      end
+    end 
   end
 
   private
