@@ -7,8 +7,8 @@ class User < ApplicationRecord
 
   has_many :topics, through: :user_topics
 
-  validates_presence_of :username, :email, :password_digest
-  validates :email, :username, uniqueness: true
+  validates_presence_of :name, :email, :password_digest
+  validates :email, :name, uniqueness: true
 
   def has_topic_edit_rights(topic)
     has_rights = false

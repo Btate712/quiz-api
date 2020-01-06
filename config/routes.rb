@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   post 'auth/login', to: 'users#login'
   get 'test', to: 'users#test'
 
-  resources :topics, :questions, :comments
+  resources :topics, :questions, :comments, :user_topics
   resources :encounters, only: [:create, :show]
 end
