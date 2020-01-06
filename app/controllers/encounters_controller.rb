@@ -1,12 +1,14 @@
 class EncountersController < ApplicationController
   def create
     failed = 0
-    user_id = @current_user
+    user_id = @current_user.id
     params[:questions].each do |question|
       e = Encounter.new(user_id: user_id, question_id: question[:id],
         selected_answer: question[:choice])
       if @current_user.has_topic_read_rights(e.question.topic)
         failed += 1 if !e.save
+      else
+        failed += 1
       end
     end
     render json: { message: "#{failed} encounters failed to save." }
