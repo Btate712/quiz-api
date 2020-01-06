@@ -34,7 +34,24 @@ class QuestionsController < ApplicationController
         render json: { status: "fail", message: "failed to create question" }
       end
     else
-      render json: { status: "fail", message: "user does not have write access to this topic" }
+      render json: { status: "fail", message: "user does not have write access to this question/topic" }
+    end
+  end
+
+  def update
+    puts params
+    question = Question.find(params[:id])
+    topic = Topic.find(question.topic_id)
+    new_topic = Topic.find(params[:topic_id])
+    if @current_user.has_topic_edit_rights(topic) && @current_user.has_topic_edit_rights(new_topic)
+      question.update(question_params)
+      if question.save
+        render json: { status: "success", body: question, message: "question ##{question.id} updated" }
+      else
+        render json: { status: "fail", message: "failed to update question" }
+      end
+    else
+      render json: { status: "fail", message: "user does not have write access to this question/topic" }
     end
   end
 
