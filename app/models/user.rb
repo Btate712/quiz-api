@@ -7,6 +7,9 @@ class User < ApplicationRecord
 
   has_many :topics, through: :user_topics
 
+  validates_presence_of :username, :email, :password_digest
+  validates :email, :username, uniqueness: true
+
   def has_topic_edit_rights(topic)
     has_rights = false
     if self.is_admin
@@ -31,5 +34,5 @@ class User < ApplicationRecord
         has_rights = true if user_topic
       end
     end
-  end 
+  end
 end

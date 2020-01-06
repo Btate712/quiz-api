@@ -4,6 +4,8 @@ class Topic < ApplicationRecord
 
   has_many :users, through: :user_topics
 
+  validates_presence_of :name
+  
   def self.for_user(user)
     if user.is_admin?
       Topic.all

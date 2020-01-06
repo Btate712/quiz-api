@@ -2,6 +2,8 @@ class Encounter < ApplicationRecord
   belongs_to :user
   belongs_to :question
 
+  validates_presence_of :user_id, :question_id, :selected_choice
+
   def self.stats(user_id) #return stats for user with the following format:
   # { topic_1: {number_correct: xxx, number_possible: xxx },
   #   topic_2: {number_correct: xxx, number_possible: xxx },
