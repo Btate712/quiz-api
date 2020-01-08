@@ -7,6 +7,7 @@ class UsersController < ApplicationController
 
   def test
     render json: {
+          status: "success",
           message: 'You have passed authentication and authorization test'
         }
   end
