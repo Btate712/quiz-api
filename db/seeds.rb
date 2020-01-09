@@ -1,7 +1,16 @@
-topics = [
-  Topic.new(name: "Math"), Topic.new(name: "Science"), Topic.new(name: "Spanish")]
 
-topics.each { |topic| topic.save }
+p = Project.create(name: "Dummy Data")
+
+topics = [
+  Topic.new(name: "Math"), 
+  Topic.new(name: "Science"), 
+  Topic.new(name: "Spanish")
+]
+
+topics.each do |topic| 
+  topic.save
+  ProjectTopic.create(project_id: p.id, topic_id: topic.id)
+end
 
 questions = [
   Question.new(stem: "What is 2 + 2?", choice_1: "1", choice_2: "2",
@@ -24,3 +33,13 @@ questions = [
     choice_4: "star", correct_choice: "4", topic: Topic.find_by(name: "Spanish"))]
 
 questions.each { |question| question.save }
+
+User.create(name: "temp", password: "temp", email: "temp@temp.temp", is_admin: false)
+User.create(name: "temp2", password: "temp2", email: "temp2@temp.temp", is_admin: false)
+User.create(name: "admin", password: "admin", email: "admin@admin.admin", is_admin: true)
+
+UserTopic.create(user: User.find_by(name: "temp"), topic: Topic.find_by(name: "Math"), access_level: 10)
+UserTopic.create(user: User.find_by(name: "temp"), topic: Topic.find_by(name: "Science"), access_level: 20)
+
+UserProject.create(user: User.find_by(name: "temp2"), project: Project.find_by(name: "Dummy Data"), access_level: 30)
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_06_154454) do
+ActiveRecord::Schema.define(version: 2020_01_09_214515) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "user_id"
@@ -25,6 +25,19 @@ ActiveRecord::Schema.define(version: 2020_01_06_154454) do
     t.integer "user_id"
     t.integer "question_id"
     t.integer "selected_choice"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "project_topics", force: :cascade do |t|
+    t.integer "project_id"
+    t.integer "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -44,6 +57,14 @@ ActiveRecord::Schema.define(version: 2020_01_06_154454) do
 
   create_table "topics", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_projects", force: :cascade do |t|
+    t.integer "project_id"
+    t.integer "user_id"
+    t.integer "access_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

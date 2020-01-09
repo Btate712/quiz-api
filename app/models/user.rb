@@ -4,9 +4,11 @@ class User < ApplicationRecord
   has_many :encounters
   has_many :comments
   has_many :user_topics
+  has_many :user_projects
 
   has_many :topics, through: :user_topics
-
+  has_many :projects, through: :user_projects
+  
   validates_presence_of :name, :email, :password_digest
   validates :email, :name, uniqueness: true
 
