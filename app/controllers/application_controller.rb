@@ -4,6 +4,9 @@ class ApplicationController < ActionController::API
 
   include ExceptionHandler
 
+  READ_LEVEL = 10
+  WRITE_LEVEL = 20
+
   # [...]
   private
   def authenticate_request

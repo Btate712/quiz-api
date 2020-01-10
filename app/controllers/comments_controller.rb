@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
     comment = Comment.find(params[:id])
     topic = comment.question.topic
     if topic
-      if @current_user.has_topic_read_rights(topic)
+      if @current_user.has_topic_rights?(topic, READ_LEVEL)
         render json: {
           status: "success",
           body: comment,
@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
     params[:resolved] = false
     comment = Comment.new(comment_params)
     topic = Question.find(comment.question_id).topic
-    if @current_user.has_topic_edit_rights(topic)
+    if @current_user.has_topic_rights?(topic, WRITE_LEVEL)
       if comment.save
         render json: { status: "success", body: comment, message: "comment ##{comment.id} saved" }
       else
@@ -46,7 +46,7 @@ class CommentsController < ApplicationController
     comment = Comment.find(params[:id])
     topic = Question.find(comment.question_id).topic
     new_topic = params[:topic_id]
-    if @current_user.has_topic_edit_rights(topic) && @current_user.has_topic_edit_rights(new_topic)
+    if @current_user.has_topic_rights?(topic, WRITE_LEVEL) && @current_user.has_topic_rights?(new_topic, WRITE_LEVEL)
       comment.update(comment_params)
       if comment.save
         render json: { status: "success", body: comment, message: "comment ##{comment.id} updated" }
@@ -62,7 +62,7 @@ class CommentsController < ApplicationController
     comment = Comment.find(params[:id])
     if comment
       topic = Question.find(comment.question_id).topic
-      if topic && @current_user.has_topic_edit_rights(topic)
+      if topic && @current_user.has_topic_rights?(topic, WRITE_LEVEL)
         comment.destroy
         render json: { status: "success", message: "comment deleted" }
       else

@@ -1,6 +1,6 @@
 class UserTopicsController < ApplicationController
   def index
-    topics = Topic.all.filter{ |topic| @current_user.has_topic_edit_rights(topic) }
+    topics = Topic.all.filter{ |topic| @current_user.has_topic_rights?(topic, READ_LEVEL) }
     user_topics = []
     topics.each { |topic| user_topics.append(topic.user_topics) }
     render json: { status: "success", body: user_topics, message: "#{user_topics.length} topics found" }
@@ -9,7 +9,7 @@ class UserTopicsController < ApplicationController
   def show
     user_topic = UserTopic.find(params[:id])
     if user_topic
-      if @current_user.has_topic_read_rights(user_topic.topic)
+      if @current_user.has_topic_rights?(user_topic.topic, READ_LEVEL)
         render json: {
           status: "success",
           body: user_topic,
@@ -25,7 +25,7 @@ class UserTopicsController < ApplicationController
 
   def create
     user_topic = UserTopic.new(user_topic_params)
-    if @current_user.has_topic_edit_rights(user_topic.topic)
+    if @current_user.has_topic_rights?(user_topic.topic, WRITE_LEVEL)
       if user_topic.save
         render json: { status: "success", body: topic, message: "new user_topic saved" }
       else
@@ -39,7 +39,7 @@ class UserTopicsController < ApplicationController
   def update
     user_topic = UserTopic.find(params[:id])
     if user_topic
-      if @current_user.has_topic_edit_rights(user_topic.topic)
+      if @current_user.has_topic_rights?(user_topic.topic, WRITE_LEVEL)
         user_topic.update(user_topic_params)
         if user_topic.save
           render json: { status: "success", body: topic, message: "user_topic updated" }
@@ -56,7 +56,7 @@ class UserTopicsController < ApplicationController
 
   def destroy
     user_topic = UserTopic.find(params[:id])
-    if user_topic && @current_user.has_topic_edit_rights(user_topic.topic)
+    if user_topic && @current_user.has_topic_rights?(user_topic.topic, WRITE_LEVEL)
       user_topic.destroy
       render json: { status: "success", message: "user_topic removed" }
     else

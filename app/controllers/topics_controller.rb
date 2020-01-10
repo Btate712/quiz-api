@@ -7,7 +7,7 @@ class TopicsController < ApplicationController
   def show
     topic = Topic.find(params[:id])
     if topic
-      if @current_user.has_topic_read_rights(topic)
+      if @current_user.has_topic_rights?(topic, READ_LEVEL)
         render json: {
           status: "success",
           body: { topic_info: topic, questions: topic.questions },
@@ -38,7 +38,7 @@ class TopicsController < ApplicationController
 
   def update
     topic = Topic.find(params[:id])
-    if topic && @current_user.has_topic_edit_rights(topic)
+    if topic && @current_user.has_topic_rights?(topic, WRITE_LEVEL)
       topic.update(topic_params)
       if topic.save
         render json: { status: "success", body: topic, message: "topic updated" }
@@ -52,7 +52,7 @@ class TopicsController < ApplicationController
 
   def destroy
     topic = Topic.find(params[:id])
-    if topic && @current_user.has_topic_edit_rights(topic)
+    if topic && @current_user.has_topic_rights?(topic, WRITE_LEVEL)
       topic.destroy_dependents
       topic.destroy
       render json: { status: "success", message: "topic deleted" }

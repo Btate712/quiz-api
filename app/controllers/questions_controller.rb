@@ -10,7 +10,7 @@ class QuestionsController < ApplicationController
     question = Question.find(params[:id])
     topic = question.topic
     if topic
-      if @current_user.has_topic_read_rights(topic)
+      if @current_user.has_topic_rights?(topic, READ_LEVEL)
         render json: {
           status: "success",
           body: { question: question },
@@ -27,7 +27,7 @@ class QuestionsController < ApplicationController
   def create
     question = Question.new(question_params)
     topic = Topic.find(question.topic_id)
-    if @current_user.has_topic_edit_rights(topic)
+    if @current_user.has_topic_rights?(topic, WRITE_LEVEL)
       if question.save
         render json: { status: "success", body: question, message: "question ##{question.id} saved" }
       else
@@ -42,7 +42,7 @@ class QuestionsController < ApplicationController
     question = Question.find(params[:id])
     topic = Topic.find(question.topic_id)
     new_topic = Topic.find(params[:topic_id])
-    if @current_user.has_topic_edit_rights(topic) && @current_user.has_topic_edit_rights(new_topic)
+    if @current_user.has_topic_rights?(topic, WRITE_LEVEL) && @current_user.has_topic_rights?(new_topic, WRITE_LEVEL)
       question.update(question_params)
       if question.save
         render json: { status: "success", body: question, message: "question ##{question.id} updated" }
@@ -58,7 +58,7 @@ class QuestionsController < ApplicationController
     question = Question.find(params[:id])
     if question
       topic = Topic.find(question.topic_id)
-      if topic && @current_user.has_topic_edit_rights(topic)
+      if topic && @current_user.has_topic_rights?(topic, WRITE_LEVEL)
         question.destroy
         render json: { status: "success", message: "question deleted" }
       else
