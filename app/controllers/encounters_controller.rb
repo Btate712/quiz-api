@@ -4,7 +4,7 @@ class EncountersController < ApplicationController
     user_id = @current_user.id
     params[:questions].each do |question|
       e = Encounter.new(user_id: user_id, question_id: question[:id],
-        selected_answer: question[:choice])
+        selected_choice: question[:choice])
       if @current_user.has_topic_rights?(e.question.topic, READ_LEVEL)
         failed += 1 if !e.save
       else
