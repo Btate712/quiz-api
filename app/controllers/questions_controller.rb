@@ -71,9 +71,9 @@ class QuestionsController < ApplicationController
     questions = params[:questions]
     questions.each do |question|
       topic = question.topic
-      question.topic_id = Topic.find_by(name: topic.name)
+      question.topic_id = Topic.find_by(name: topic)
       if !question.topic_id
-        question.topic_id = Topic.create(name: topic.name).id  
+        question.topic_id = Topic.create(name: topic).id  
         ProjectTopic.create(project_id: params[:project_id], topic_id: question.topic_id)
       end
       Question.create(
