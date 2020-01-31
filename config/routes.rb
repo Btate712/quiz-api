@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get 'test', to: 'users#test'
 
   post 'quiz', to: 'quizzes#create'
+
+  get '/', to: 'users#root'
   
   resources :topics, :questions, :comments, :user_topics
   resources :encounters, only: [:create, :show]

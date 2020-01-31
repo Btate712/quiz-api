@@ -23,6 +23,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def root
+    render json: {
+      message: "Study With Quizzes API..." 
+    }
+  end 
+  
   private
 
   def user_params
