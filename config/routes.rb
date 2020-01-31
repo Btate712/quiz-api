@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   post 'quiz', to: 'quizzes#create'
 
   get '/', to: 'users#root'
+
+  post 'questions/batch', to 'questions#batch_create'
   
   resources :topics, :questions, :comments, :user_topics
   resources :encounters, only: [:create, :show]

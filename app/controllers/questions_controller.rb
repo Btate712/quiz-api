@@ -67,6 +67,27 @@ class QuestionsController < ApplicationController
     end 
   end
 
+  def batch_create
+    questions = params[:questions]
+    questions.each do |question|
+      topic = question.topic
+      question.topic_id = Topic.find_by(name: topic.name)
+      if !question.topic_id
+        question.topic_id = Topic.create(name: topic.name).id  
+        ProjectTopic.create(project_id: params[:project_id], topic_id: question.topic_id)
+      end
+      Question.create(
+        topic_id: question.topic_id,
+        stem: question.stem,
+        choice1: question.choice1,
+        choice2: question.choice2,
+        choice3: question.choice3,
+        choice4: question.choice4,
+        correct_choice: question.correct_choice,
+      )
+    end
+  end 
+
   private
 
   def question_params
