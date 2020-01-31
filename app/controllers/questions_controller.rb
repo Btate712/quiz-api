@@ -79,10 +79,10 @@ class QuestionsController < ApplicationController
       Question.create(
         topic_id: question[:topic_id],
         stem: question[:stem],
-        choice1: question[:choice1],
-        choice2: question[:choice2],
-        choice3: question[:choice3],
-        choice4: question[:choice4],
+        choice_1: question[:choice1],
+        choice_2: question[:choice2],
+        choice_3: question[:choice3],
+        choice_4: question[:choice4],
         correct_choice: question[:correct_choice],
       )
     end
