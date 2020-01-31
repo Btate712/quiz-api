@@ -41,7 +41,7 @@ module QuizApi
     #cors configuration
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
+        origins 'https://study-with-quizzes.herokuapp.com'
         resource '*', headers: :any, methods: [:get, :post, :patch, :put, :delete, :options]
       end
     end
