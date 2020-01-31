@@ -85,7 +85,7 @@ class QuestionsController < ApplicationController
         choice_2: question[:choice2],
         choice_3: question[:choice3],
         choice_4: question[:choice4],
-        correct_choice: question[:correct_choice]
+        correct_choice: question[:correctChoice]
       })
       puts new_question.inspect 
       new_question.save 
