@@ -71,9 +71,9 @@ class QuestionsController < ApplicationController
     questions = params[:questions]
     questions.each do |question|
       topic = question["topic"]
-      topic_id = Topic.find_by(name: topic)
-      if topic_id
-        question[:topic_id] = topic_id 
+      found_topic = Topic.find_by(name: topic)
+      if found_topic
+        question[:topic_id] = found_topic.id 
       else
         puts "Topic was not found.  Creating Topic: #{topic}"
         question[:topic_id] = Topic.create(name: topic).id  
