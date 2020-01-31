@@ -76,7 +76,7 @@ class QuestionsController < ApplicationController
         question[:topic_id] = Topic.create(name: topic).id  
         ProjectTopic.create({project_id: params[:project_id], topic_id: question[:topic_id]})
       end
-      Question.create({
+      success = Question.create({
         topic_id: question[:topic_id],
         stem: question[:stem],
         choice_1: question[:choice1],
@@ -85,6 +85,7 @@ class QuestionsController < ApplicationController
         choice_4: question[:choice4],
         correct_choice: question[:correct_choice]
       })
+      puts success ? "Question Created" : success.errors
     end
   end 
 
