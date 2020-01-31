@@ -72,7 +72,7 @@ class QuestionsController < ApplicationController
     questions.each do |question|
       topic = question["topic"]
       question[:topic_id] = Topic.find_by(name: topic).id
-      puts "New question for topic: #{Topic.find(question[:topic_id])}"
+      puts "New question for topic: #{Topic.find(question[:topic_id]).name}"
       if !question[:topic_id]
         puts "Topic was not found.  Creating Topic: #{topic}"
         question[:topic_id] = Topic.create(name: topic).id  
@@ -87,7 +87,7 @@ class QuestionsController < ApplicationController
         choice_4: question[:choice4],
         correct_choice: question[:correct_choice]
       })
-      puts new_question 
+      puts new_question.inspect 
       new_question.save 
     end
   end 
