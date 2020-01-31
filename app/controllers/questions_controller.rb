@@ -71,9 +71,10 @@ class QuestionsController < ApplicationController
     questions = params[:questions]
     questions.each do |question|
       topic = question["topic"]
-      question[:topic_id] = Topic.find_by(name: topic).id
-      puts "New question for topic: #{Topic.find(question[:topic_id]).name}"
-      if !question[:topic_id]
+      topic_id = Topic.find_by(name: topic)
+      question[:topic_id] = topic_id if topic_id
+      # puts "New question for topic: #{Topic.find(question[:topic_id]).name}"
+      if !topic_id
         puts "Topic was not found.  Creating Topic: #{topic}"
         question[:topic_id] = Topic.create(name: topic).id  
         ProjectTopic.create({project_id: params[:project_id], topic_id: question[:topic_id]})
