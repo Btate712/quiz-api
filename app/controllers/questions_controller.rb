@@ -74,9 +74,9 @@ class QuestionsController < ApplicationController
       question[:topic_id] = Topic.find_by(name: topic)
       if !question[:topic_id]
         question[:topic_id] = Topic.create(name: topic).id  
-        ProjectTopic.create(project_id: params[:project_id], topic_id: question[:topic_id])
+        ProjectTopic.create({project_id: params[:project_id], topic_id: question[:topic_id]})
       end
-      Question.create(
+      Question.create({
         topic_id: question[:topic_id],
         stem: question[:stem],
         choice_1: question[:choice1],
@@ -84,7 +84,7 @@ class QuestionsController < ApplicationController
         choice_3: question[:choice3],
         choice_4: question[:choice4],
         correct_choice: question[:correct_choice]
-      )
+      })
     end
   end 
 
