@@ -11,7 +11,7 @@ class Topic < ApplicationRecord
       Topic.all
     else
       Topic.all.filter do |topic|
-        user.has_topic_rights?(topic, READ)
+        user.has_topic_rights?(topic, 10)
       end
     end
   end
