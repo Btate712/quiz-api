@@ -30,12 +30,9 @@ class UsersController < ApplicationController
   end 
 
   def get_user
-    user = User.find(params[:id])
-    if user == @current_user
-      render json: {
-        user: user
-      }
-    end
+    render json: {
+      user: @current_user
+    }
   end
 
   private
