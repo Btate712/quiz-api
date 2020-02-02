@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    if @current_user.isAdmin
+    if @current_user.is_admin
       render json: {users: User.all}
     else
       render json: {message: "Insufficient User Access Level"}
