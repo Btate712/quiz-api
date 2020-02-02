@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     }
   end 
 
-  def show
+  def get_user
     user = User.find(params[:id])
     if user == @current_user
       render json: {

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   post 'questions/batch', to: 'questions#batch_create'
 
+  get '/users/me', to: 'users#get_user'
+
   resources :topics, :questions, :comments, :user_topics
   resources :encounters, only: [:create, :show]
 end
