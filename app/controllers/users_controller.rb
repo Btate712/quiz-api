@@ -40,6 +40,7 @@ class UsersController < ApplicationController
       render json: {users: User.all}
     else
       render json: {message: "Insufficient User Access Level"}
+    end
   end
   private
 
