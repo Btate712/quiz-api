@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     if command.success?
       render json: {
         access_token: command.result,
-        is_admin: @user.is_admin,
+        is_admin: command.is_admin,
         message: 'Login Successful'
       }
     else
