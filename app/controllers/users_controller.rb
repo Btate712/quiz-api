@@ -29,6 +29,15 @@ class UsersController < ApplicationController
     }
   end 
 
+  def show
+    user = User.find(params[:id])
+    if user == @current_user
+      render json: {
+        user: user
+      }
+    end
+  end
+
   private
 
   def user_params
@@ -46,7 +55,6 @@ class UsersController < ApplicationController
     if command.success?
       render json: {
         access_token: command.result,
-        is_admin: command.user.is_admin,
         message: 'Login Successful'
       }
     else
