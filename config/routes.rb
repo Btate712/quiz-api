@@ -16,5 +16,5 @@ Rails.application.routes.draw do
   resources :user_projects, only: [:create]
   resources :topics, :questions, :comments, :user_topics
   resources :encounters, only: [:create, :show]
-  resources :projects, only: [:index]
+  resources :projects, :users, only: [:index]
 end

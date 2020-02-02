@@ -1,5 +1,8 @@
 class ProjectsController < ApplicationController
   def index
-    render json: {projects: Project.all}
+    if @current_user.isAdmin
+      render json: {projects: Project.all}
+    else
+      render json: {message: "Insufficient User Access Level"}
   end
 end
