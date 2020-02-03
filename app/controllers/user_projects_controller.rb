@@ -1,6 +1,6 @@
 class UserProjectsController < ApplicationController
   def create
-    user_project = UserProject.new(user_topic_params)
+    user_project = UserProject.new(user_project_params)
     if @current_user.is_admin
       if user_project.save
         render json: { status: "success", message: "new user_project saved" }
