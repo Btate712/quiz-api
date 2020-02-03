@@ -15,6 +15,6 @@ class UserProjectsController < ApplicationController
   private
 
   def user_project_params
-    params.permit(:user_id, :topic_id, :access_level)
+    params.permit(:user_id, :project_id, :access_level)
   end
 end
