@@ -13,8 +13,9 @@ Rails.application.routes.draw do
 
   get '/users/me', to: 'users#get_user'
 
-  resources :user_projects, only: [:create]
+  resources :user_projects, :project_topics, only: [:create]
   resources :topics, :questions, :comments, :user_topics
   resources :encounters, only: [:create, :show]
   resources :projects, :users, only: [:index]
+
 end
