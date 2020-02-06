@@ -8,14 +8,20 @@ class Quiz < ApplicationRecord
     # questions in the quiz_questions array
     topic_ids.shuffle.each do |topic_id|
       topic_questions = Topic.find(topic_id).questions.shuffle
-      questions_per_topic.times do
-        if(!topic_questions.empty?)
+      if questions_per_topic < 1
+        if quiz_questions.count < number_of_questions.to_i
           quiz_questions.push(topic_questions.pop)
         end
-      end
-      #grab extra questions for each topic to fill in the remaining questions
-      until topic_questions.empty?
-        spare_questions.push(topic_questions.pop)
+      else
+        questions_per_topic.times do
+          if(!topic_questions.empty?)
+            quiz_questions.push(topic_questions.pop)
+          end
+        end
+        #grab extra questions for each topic to fill in the remaining questions
+        until topic_questions.empty?
+          spare_questions.push(topic_questions.pop)
+        end
       end
     end
 
