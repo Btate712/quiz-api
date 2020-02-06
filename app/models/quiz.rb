@@ -6,7 +6,7 @@ class Quiz < ApplicationRecord
 
     # take an equal number of questions from each topic and store those
     # questions in the quiz_questions array
-    topic_ids.each do |topic_id|
+    topic_ids.shuffle.each do |topic_id|
       topic_questions = Topic.find(topic_id).questions.shuffle
       questions_per_topic.times do
         if(!topic_questions.empty?)
