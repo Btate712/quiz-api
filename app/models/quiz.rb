@@ -8,7 +8,7 @@ class Quiz < ApplicationRecord
     # questions in the quiz_questions array
     topic_ids.shuffle.each do |topic_id|
       topic_questions = Topic.find(topic_id).questions.shuffle
-      if questions_per_topic < 1
+      if number_of_questions < topic_ids.count
         if quiz_questions.count < number_of_questions.to_i
           quiz_questions.push(topic_questions.pop)
         end
