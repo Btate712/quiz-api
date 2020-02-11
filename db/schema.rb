@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2020_02_11_003830) do
     t.boolean "resolved"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "type"
+    t.string "comment_type"
   end
 
   create_table "encounters", force: :cascade do |t|
