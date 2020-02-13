@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   def index
-    topics = Topic.for_user(@current_user)
+    topics = Topic.for_user_as_hash(@current_user)
     render json: { status: "success", body: topics, message: "#{topics.length} topics found" }
   end
 

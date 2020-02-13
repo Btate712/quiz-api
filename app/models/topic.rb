@@ -6,14 +6,12 @@ class Topic < ApplicationRecord
 
   validates_presence_of :name
   
+  def self.for_user_as_hash(user)
+    self.for_user(user).map { |topic| { topic: topic, questionCount: topic.questions.count }}
+  end
+
   def self.for_user(user)
-    if user.is_admin?
-      Topic.all
-    else
-      Topic.all.filter do |topic|
-        user.has_topic_rights?(topic, 10)
-      end
-    end
+    user.is_admin? ? Topic.all : Topic.all.filter { |topic| user.has_topic_rights?(topic, 10) }
   end
 
   def destroy_dependents
