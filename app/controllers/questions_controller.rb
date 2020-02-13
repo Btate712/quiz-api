@@ -13,7 +13,10 @@ class QuestionsController < ApplicationController
       if @current_user.has_topic_rights?(topic, READ_LEVEL)
         render json: {
           status: "success",
-          body: { question: question },
+          body: { 
+            question: question, 
+            comments: question.comments.map { |comment| { comment: comment, user_name: User.find(comment.user_id) }} 
+          },
           message: "question ##{question.id} received"
         }
       else

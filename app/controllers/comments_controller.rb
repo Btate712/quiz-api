@@ -1,11 +1,14 @@
 class CommentsController < ApplicationController
   def index
-    topics = Topic.for_user(@current_user)
-    questions = []
-    topics.each { |topic| questions.concat(topic.questions) }
-    comments = []
-    questions.each { |question| comments.concat(question.comments) }
-    render json: { status: "success", body: comments, message: "#{comments.length} comments found" }
+    question = Question.find(params[:question_id])
+    if question 
+      body = question.comments.map do |comment| 
+        user = User.find(comment.user_id)
+        return { comment: comment, user_name: user ? user.name : "Not Found" }
+      end 
+    end
+    puts "Body: #{body}"
+    render json: { status: "success", body: body, message: "#{comments.length} comments found" }
   end
 
   def show
