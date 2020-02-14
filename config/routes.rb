@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get '/users/me', to: 'users#get_user'
 
   resources :questions do
-    resources :comments, only: [:index]
+    resources :comments, only: [:index, :create]
   end
   
   resources :user_projects, :project_topics, only: [:create]

@@ -32,7 +32,13 @@ class CommentsController < ApplicationController
   def create
     params[:user_id] = @current_user.id
     params[:resolved] = false
-    comment = Comment.new(comment_params)
+    comment = Comment.new(
+      question_id: params[:question_id].to_i,
+      user_id: @current_user.id,
+      text: params[:text],
+      resolved: params[:resolved],
+      comment_type: params[:comment_type]
+    )
     topic = Question.find(comment.question_id).topic
     if @current_user.has_topic_rights?(topic, WRITE_LEVEL)
       if comment.save
