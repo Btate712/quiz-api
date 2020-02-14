@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
       user_id: @current_user.id,
       text: params[:text],
       resolved: params[:resolved],
-      type: params[:comment_type]
+      comment_type: params[:comment_type]
     )
     topic = Question.find(comment.question_id).topic
     if @current_user.has_topic_rights?(topic, WRITE_LEVEL)
@@ -83,6 +83,6 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.permit(:question_id, :user_id, :text, :resolved, :type)
+    params.permit(:question_id, :user_id, :text, :resolved, :comment_type)
   end
 end
