@@ -5,7 +5,7 @@ class UserProjectsController < ApplicationController
       if user_project.save
         render json: { status: "success", message: "new user_project saved" }
       else
-        render json: { status: "fail", message: "failed to create user_project" }
+        render json: { status: "fail", message: user_project.errors.messages.inspect }
       end
     else
       render json: { status: "fail", message: "user does not have access to assign users to projects"}
