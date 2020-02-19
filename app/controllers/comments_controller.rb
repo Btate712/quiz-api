@@ -37,14 +37,14 @@ class CommentsController < ApplicationController
       user_id: @current_user.id,
       text: params[:text],
       resolved: params[:resolved],
-      type: params[:comment_type]
+      comment_type: params[:comment_type]
     )
     topic = Question.find(comment.question_id).topic
-    if @current_user.has_topic_rights?(topic, WRITE_LEVEL)
+    if @current_user.has_topic_rights?(topic, READ_LEVEL)
       if comment.save
         render json: { status: "success", body: comment, message: "comment ##{comment.id} saved" }
       else
-        render json: { status: "fail", message: "failed to create comment" }
+        render json: { status: "fail", message: comment.errors.messages[:user_id] }
       end
     else
       render json: { status: "fail", message: "user does not have write access to this question/topic" }
