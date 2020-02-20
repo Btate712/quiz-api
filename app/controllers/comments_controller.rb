@@ -71,7 +71,7 @@ class CommentsController < ApplicationController
     comment = Comment.find(params[:id])
     if comment
       topic = Question.find(comment.question_id).topic
-      if topic && @current_user.has_topic_rights?(topic, WRITE_LEVEL)
+      if topic && (@current_user.has_topic_rights?(topic, WRITE_LEVEL) || comment.user == @current_user)
         comment.destroy
         render json: { status: "success", message: "comment deleted" }
       else
