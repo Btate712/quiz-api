@@ -3,7 +3,7 @@ class QuizzesController < ApplicationController
     topic_ids = params[:topicIds].split(",")
     number_of_questions = params[:numberOfQuestions].to_i
     
-    questions = Quiz.makeQuiz(number_of_questions, topic_ids)
+    questions = Quiz.makeQuiz(number_of_questions, topic_ids, @current_user)
     quiz = questions.map do |question|
       {
         question: question,

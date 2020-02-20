@@ -1,5 +1,5 @@
 class Quiz < ApplicationRecord
-  def self.makeQuiz(number_of_questions, topic_ids)
+  def self.makeQuiz(number_of_questions, topic_ids, user)
     questions_per_topic = (number_of_questions.to_i / topic_ids.count)
     quiz_questions = []
     spare_questions = []
@@ -10,17 +10,17 @@ class Quiz < ApplicationRecord
       topic_questions = Topic.find(topic_id).questions.shuffle
       if number_of_questions < topic_ids.count
         if quiz_questions.count < number_of_questions.to_i
-          quiz_questions.push(topic_questions.pop)
+          topic_questions.last.dont_ask?(user) ? topic_questions.pop : quiz_questions.push(topic_questions.pop) 
         end
       else
         questions_per_topic.times do
           if(!topic_questions.empty?)
-            quiz_questions.push(topic_questions.pop)
+            topic_questions.last.dont_ask?(user) ? topic_questions.pop : quiz_questions.push(topic_questions.pop)
           end
         end
         #grab extra questions for each topic to fill in the remaining questions
         until topic_questions.empty?
-          spare_questions.push(topic_questions.pop)
+          topic_questions.last.dont_ask?(user) ? topic_questions.pop : quiz_questions.push(topic_questions.pop)
         end
       end
     end
