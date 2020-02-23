@@ -7,7 +7,7 @@ class QuizzesController < ApplicationController
     quiz = questions.map do |question|
       {
         question: question,
-        comments: question.comments
+        comments: question.comments.map {|comment| { comment: comment, user_name: comment.user }}
       }
     end
     render json: { quiz: quiz }

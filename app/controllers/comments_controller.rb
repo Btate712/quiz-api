@@ -30,13 +30,11 @@ class CommentsController < ApplicationController
   end
 
   def create
-    params[:user_id] = @current_user.id
-    params[:resolved] = false
     comment = Comment.new(
       question_id: params[:question_id].to_i,
       user_id: @current_user.id,
       text: params[:text],
-      resolved: params[:resolved],
+      resolved: false,
       comment_type: params[:comment_type]
     )
     topic = Question.find(comment.question_id).topic
