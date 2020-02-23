@@ -19,8 +19,8 @@ class Quiz < ApplicationRecord
           end
         end
         #grab extra questions for each topic to fill in the remaining questions
-        until topic_questions.empty?
-          topic_questions.last.dont_ask?(user) ? topic_questions.pop : quiz_questions.push(topic_questions.pop)
+        until topic_questions.empty? 
+          topic_questions.last.dont_ask?(user) ? topic_questions.pop : spare_questions.push(topic_questions.pop)
         end
       end
     end
