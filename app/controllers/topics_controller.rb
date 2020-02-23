@@ -22,10 +22,12 @@ class TopicsController < ApplicationController
   end
 
   def create
-    topic = Topic.new(topic_params)
+    topic = Topic.new({name: params[:name]})
     if topic.save
       user_topic = UserTopic.new(user_id: @current_user.id, topic_id: topic.id, access_level: 30)
       if user_topic.save
+        project_topic = ProjectTopic.new(topic_id: topic.id, project_id: params[:project_id] )
+        project_topic.save
         render json: { status: "success", body: topic, message: "new topic saved" }
       else
         topic.destroy

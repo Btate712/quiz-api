@@ -62,6 +62,8 @@ class QuestionsController < ApplicationController
     if question
       topic = Topic.find(question.topic_id)
       if topic && @current_user.has_topic_rights?(topic, WRITE_LEVEL)
+        question.comments.each { |comment| comment.destroy }
+        question.encounters.each { |encounter| encounter.destroy }
         question.destroy
         render json: { status: "success", message: "question deleted" }
       else
