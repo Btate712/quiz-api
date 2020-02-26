@@ -40,7 +40,7 @@ class CommentsController < ApplicationController
     topic = Question.find(comment.question_id).topic
     if @current_user.has_topic_rights?(topic, READ_LEVEL)
       if comment.save
-        render json: { status: "success", body: comment, message: "comment ##{comment.id} saved" }
+        render json: { status: "success", body: { comment: comment, user_name: comment.user }, message: "comment ##{comment.id} saved" }
       else
         render json: { status: "fail", message: comment.errors.messages[:user_id] }
       end
