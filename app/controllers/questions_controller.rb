@@ -15,6 +15,7 @@ class QuestionsController < ApplicationController
           status: "success",
           body: { 
             question: question, 
+            topic: question.topic,
             comments: question.comments.map { |comment| { comment: comment, user_name: User.find(comment.user_id) }} 
           },
           message: "question ##{question.id} received"
