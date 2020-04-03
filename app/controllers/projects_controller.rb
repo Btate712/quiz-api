@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
     if @current_user.is_admin
       render json: {projects: Project.all}
     else
-      render json: {message: "Insufficient User Access Level"}
+      render json: {projects: @current_user.projects}
     end
   end
 end
