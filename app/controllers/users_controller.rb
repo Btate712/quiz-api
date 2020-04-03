@@ -31,7 +31,8 @@ class UsersController < ApplicationController
 
   def get_user
     render json: {
-      user: @current_user
+      user: @current_user,
+      projects: @current_user.projects
     }
   end
 
