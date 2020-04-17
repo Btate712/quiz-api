@@ -16,7 +16,11 @@ class Topic < ApplicationRecord
 
   def date_last_question_added
     last_question = self.questions.max_by do |question| 
-      question.created_at
+      if question 
+        question.created_at
+      else
+        0
+      end
     end
     last_question.created_at
   end
