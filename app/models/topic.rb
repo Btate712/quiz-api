@@ -15,7 +15,10 @@ class Topic < ApplicationRecord
   end
 
   def date_last_question_added
-    self.questions.max_by{ |question| question.created_at }.created_at
+    last_question = self.questions.max_by do |question| 
+      question.created_at
+    end
+    last_question.created_at
   end
 
   def destroy_dependents
