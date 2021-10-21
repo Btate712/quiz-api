@@ -8,7 +8,13 @@ class QuestionsController < ApplicationController
 
   def all
     questions = Question.all
-    render json: { questions: questions }
+    topics = Topic.all
+    comments = Comment.all
+    render json: { 
+      topics: topics,
+      questions: questions,
+      comments: comments
+    }
   end
 
   def show
