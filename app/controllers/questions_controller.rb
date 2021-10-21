@@ -6,10 +6,11 @@ class QuestionsController < ApplicationController
     render json: { status: "success", body: questions, message: "#{questions.length} questions found" }
   end
 
-  def test
-    render json: { message: "this is a test" }
+  def all
+    questions = Question.all
+    render json: { questions: questions }
   end
-  
+
   def show
     question = Question.find(params[:id])
     topic = question.topic
