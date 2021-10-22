@@ -9,8 +9,6 @@ Rails.application.routes.draw do
 
   get '/', to: 'users#root'
 
-  get 'questions/all', to: 'questions#all'
-
   post 'questions/batch', to: 'questions#batch_create'
 
   get '/users/me', to: 'users#get_user'
